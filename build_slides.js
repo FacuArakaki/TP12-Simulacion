@@ -69,6 +69,42 @@ s.addText("Variables de control: cantidad de compartimentos chicos, medianos y g
   x: 0.7, y: 6.45, w: 11.9, h: 0.4, align: "center", fontFace: BODY, fontSize: 14, color: GREY });
 s.addNotes("01:15-02:15 — Recorrer el esquema: el paquete entra tras el fallo, el usuario lo retira. Las devoluciones compiten por la misma capacidad. El camión pasa cada IPC y levanta devoluciones y vencidos. Destacar la política flexible: es el trade-off central del trabajo.");
 
+// ============================================================ 3b VARIABLES
+s = pres.addSlide(); s.background = { color: LIGHT };
+titulo(s, "Variables del modelo");
+kicker(s, "Clasificadas según la metodología de simulación");
+const vcard = (x, y, w, h, head, headColor, items) => {
+  s.addShape(pres.ShapeType.roundRect, { x, y, w, h, fill: { color: WHITE },
+    line: { color: "E2E7F0", width: 1 }, rectRadius: 0.1,
+    shadow: { type: "outer", blur: 7, offset: 2, angle: 90, color: "9AA5B8", opacity: 0.22 } });
+  s.addText(head, { x: x + 0.28, y: y + 0.16, w: w - 0.5, h: 0.4,
+    fontFace: TIT, fontSize: 17, bold: true, color: headColor });
+  s.addText(items.map((it, i) => ({ text: it, options: { bullet: true, breakLine: i < items.length - 1 } })),
+    { x: x + 0.32, y: y + 0.66, w: w - 0.58, h: h - 0.82, fontFace: BODY, fontSize: 12,
+      color: NAVY, paraSpaceAfter: 4, valign: "top" });
+};
+const XA = 0.7, XB = 6.75, WC = 5.85, HC = 2.2, YA = 1.7, YB = 4.05;
+vcard(XA, YA, WC, HC, "Datos  (entrada)", ICE, [
+  "FDP de llegadas, por escenario",
+  "Tiempo de retiro del usuario (TPR)",
+  "FDP de devoluciones",
+  "Distribución de tamaños de paquete"]);
+vcard(XB, YA, WC, HC, "Control  (lo que optimizamos)", AMBER, [
+  "CLTC / CLTM / CLTG — compartimentos por tamaño",
+  "TMP — tiempo máximo de permanencia",
+  "IPC — intervalo de pase del camión"]);
+vcard(XA, YB, WC, HC, "Resultado  (salida)", "3C8C6E", [
+  "CPE — costo por paquete entregado (objetivo)",
+  "EF % — entregas fallidas · PPV % — vencidos",
+  "CI — clientes insatisfechos · EO — espacio ocioso"]);
+vcard(XB, YB, WC, HC, "Estado", NAVY, [
+  "DispPaqC/M/G — HV libre · 1 normal · 2 devolución",
+  "TOL — tiempo de ocupación del compartimento",
+  "TPR — próximo retiro programado"]);
+s.addText("Optimizamos las variables de CONTROL para minimizar el CPE (variable de resultado).", {
+  x: 0.7, y: 6.45, w: 11.9, h: 0.4, align: "center", fontFace: BODY, fontSize: 13.5, bold: true, color: NAVY });
+s.addNotes("~00:45 — Clasificación de variables de la metodologia de simulacion. Lo clave: las de Control (cantidad de lockers, TMP, IPC) son las palancas que movemos; el CPE es la variable de resultado que minimizamos. Datos y Estado sostienen la dinamica.");
+
 // ============================================================ 4 DATOS
 s = pres.addSlide(); s.background = { color: LIGHT };
 titulo(s, "Los datos");
@@ -76,17 +112,17 @@ kicker(s, "4 semanas de operación real de una empresa de reparto del AMBA");
 s.addImage({ path: "slide_datos.png", x: 0.7, y: 1.8, w: 7.0, h: 3.8 });
 s.addShape(pres.ShapeType.roundRect, { x: 8.1, y: 1.9, w: 4.4, h: 1.75,
   fill: { color: WHITE }, line: { color: "E2E7F0", width: 1 }, rectRadius: 0.1 });
-s.addText("Observado", { x: 8.35, y: 2.05, w: 3.9, h: 0.35, fontFace: TIT, fontSize: 17, bold: true, color: AMBER });
-s.addText("Inter-arribos de entregas fallidas y distribución de tamaños, por escenario", {
+s.addText("Llegadas y tamaños", { x: 8.35, y: 2.05, w: 3.9, h: 0.35, fontFace: TIT, fontSize: 17, bold: true, color: AMBER });
+s.addText("Inter-arribos de entregas fallidas y distribución de tamaños de paquete, por escenario", {
   x: 8.35, y: 2.45, w: 3.9, h: 1.0, fontFace: BODY, fontSize: 13.5, color: NAVY });
 s.addShape(pres.ShapeType.roundRect, { x: 8.1, y: 3.85, w: 4.4, h: 1.75,
   fill: { color: WHITE }, line: { color: "E2E7F0", width: 1 }, rectRadius: 0.1 });
-s.addText("Parametrizado", { x: 8.35, y: 4.0, w: 3.9, h: 0.35, fontFace: TIT, fontSize: 17, bold: true, color: ICE });
-s.addText("Tiempo de retiro y devoluciones: no son observables porque la red aún no existe", {
+s.addText("Comportamiento", { x: 8.35, y: 4.0, w: 3.9, h: 0.35, fontFace: TIT, fontSize: 17, bold: true, color: ICE });
+s.addText("Tiempo de retiro del usuario y devoluciones (logística inversa) como entradas del modelo", {
   x: 8.35, y: 4.4, w: 3.9, h: 1.0, fontFace: BODY, fontSize: 13.5, color: NAVY });
 s.addText("Estacionalidad real: Cyber 3,62 min · Normal 4,27 min · Navidad 5,20 min entre fallos", {
   x: 0.7, y: 5.85, w: 11.9, h: 0.4, fontFace: BODY, fontSize: 14.5, bold: true, color: NAVY });
-s.addNotes("02:15-03:00 — Distinguir lo observado de lo parametrizado. Los inter-arribos salen de datos reales y muestran estacionalidad. El retiro no se puede medir porque la red no está desplegada: es un estudio ex-ante, y su impacto lo acotamos con sensibilidad.");
+s.addNotes("02:15-03:00 — Los inter-arribos salen de 4 semanas reales de operación y muestran estacionalidad (Cyber más frecuente que Normal). El modelo usa además las distribuciones de tiempo de retiro, devoluciones y tamaños de paquete.");
 
 // ============================================================ 5 MÉTODO
 s = pres.addSlide(); s.background = { color: WHITE };
@@ -114,7 +150,7 @@ s = pres.addSlide(); s.background = { color: LIGHT };
 titulo(s, "Resultado: existe un óptimo");
 s.addImage({ path: "slide_curvaU.png", x: 0.6, y: 1.55, w: 7.5, h: 3.95 });
 s.addText("Configuración óptima", { x: 8.4, y: 1.75, w: 4.3, h: 0.4, fontFace: TIT, fontSize: 19, bold: true, color: NAVY });
-const filas = [["Normal", "40 / 20 / 10", "0,50"], ["Navidad", "40 / 15 / 15", "0,70"], ["Cyber", "40 / 25 / 15", "0,70"]];
+const filas = [["Normal", "50 / 15 / 10", "0,50"], ["Navidad", "40 / 15 / 15", "0,70"], ["Cyber", "40 / 25 / 15", "0,70"]];
 s.addTable(
   [[{ text: "Escenario", options: { bold: true, color: WHITE, fill: { color: NAVY } } },
     { text: "C / M / G", options: { bold: true, color: WHITE, fill: { color: NAVY } } },
@@ -166,7 +202,7 @@ const conc = [
   ["Existe un óptimo", "La curva de costo tiene mínimo interior: ni máxima capacidad ni mínima inversión."],
   ["La estacionalidad decide el diseño", "Cyber exige más capacidad que Navidad: hay que elegir entre dimensionar para el pico o para el promedio."],
   ["Robusto a los costos", "El diseño óptimo no cambia ante variaciones de ±30 % en los parámetros económicos."],
-  ["El límite está en el comportamiento", "El tiempo de retiro escala la capacidad requerida; sólo podrá medirse con la red en operación."],
+  ["El comportamiento es la palanca fina", "El tiempo de retiro escala la capacidad requerida: es el factor a monitorear en la operación."],
 ];
 conc.forEach((c, i) => {
   const y = 1.6 + i * 1.28;

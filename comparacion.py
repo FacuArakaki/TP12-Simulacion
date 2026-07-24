@@ -36,7 +36,7 @@ ESCENARIOS = ['NORMAL', 'NAVIDAD', 'CYBER']
 _TF_DIAS = int(os.environ.get('BARRIDO_TF_DIAS', 0))
 if _TF_DIAS:
     S.TF = 60 * 24 * _TF_DIAS
-N_REP = int(os.environ.get('BARRIDO_NREP', 15))
+N_REP = int(os.environ.get('BARRIDO_NREP', 30))
 SEED0 = 1000
 
 # Orden y métricas que se muestran en la tabla

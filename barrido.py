@@ -31,7 +31,7 @@ ESCENARIOS = ['NORMAL', 'NAVIDAD', 'CYBER']
 _TF_DIAS = int(os.environ.get('BARRIDO_TF_DIAS', 0))
 if _TF_DIAS:
     S.TF = 60 * 24 * _TF_DIAS
-N_REP = int(os.environ.get('BARRIDO_NREP', 15))
+N_REP = int(os.environ.get('BARRIDO_NREP', 30))
 SEED0 = 1000
 
 
@@ -44,7 +44,7 @@ def evaluar(esc, cltc, cltm, cltg):
         vals = [c[key] for c in corridas]
         m = statistics.mean(vals)
         sd = statistics.stdev(vals) if len(vals) > 1 else 0.0
-        hw = 2.145 * sd / math.sqrt(N_REP)  # t(0.975, 14)≈2.145
+        hw = 1.96 * sd / math.sqrt(N_REP)   # n>=30 -> z(0.975)=1.96
         res[key] = (m, hw)
     return res
 

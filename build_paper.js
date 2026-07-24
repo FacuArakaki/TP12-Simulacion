@@ -145,7 +145,7 @@ c.push(cap("Tabla 3. Configuración óptima por escenario."));
 c.push(tabla(
   ["Escenario", "C / M / G", "CPE", "Saturac."],
   [
-    ["Normal", "40 / 20 / 10", "0,50", "0,07 %"],
+    ["Normal", "50 / 15 / 10", "0,50", "0,05 %"],
     ["Navidad", "40 / 15 / 15", "0,70", "0,07 %"],
     ["Cyber", "40 / 25 / 15", "0,70", "1,16 %"],
   ],
@@ -157,7 +157,7 @@ c.push(cap("Figura 2. Costo por paquete entregado en función de la cantidad de 
 c.push(p([t("La Figura 3 extiende el análisis a la interacción entre los tres tamaños para el escenario de mayor demanda, evaluando cada par de tamaños con el tercero fijo en su valor óptimo. En los tres planos el costo desciende marcadamente al aumentar la capacidad hasta alcanzar una región amplia de bajo costo, dentro de la cual varias configuraciones resultan prácticamente equivalentes. El gradiente más pronunciado corresponde a los compartimentos chicos, coherente con el hecho de que concentran la mayor parte de la demanda: pasar de 10 a 40 unidades reduce el CPE de 15,5 a 3,4 dólares con los medianos en su mínimo. Los compartimentos grandes muestran un efecto menor pero no despreciable, ya que su escasez obliga a la política flexible a ocupar capacidad mayor con paquetes pequeños.")]));
 c.push(img("fig3_heatmap.png", 456));
 c.push(cap("Figura 3. CPE en función de cada par de tamaños de compartimento, escenario Cyber, con el tercer tamaño fijo en su valor óptimo: (a) chicos vs. medianos, (b) chicos vs. grandes y (c) medianos vs. grandes."));
-c.push(p([t("Para dimensionar el valor de optimizar, la Figura 4 compara cuatro diseños: uno subdimensionado, la configuración de referencia sin optimizar, el óptimo y una configuración de máximo nivel de servicio. En el escenario Cyber, el diseño subdimensionado alcanza un CPE de 31,7 dólares con una saturación del 62 %, frente a 0,70 dólares y 0,9 % del óptimo. La configuración de máximo servicio prácticamente no mejora el nivel de servicio del óptimo y sí incrementa el costo.")]));
+c.push(p([t("Para dimensionar el valor de optimizar, la Figura 4 compara cuatro diseños: uno subdimensionado, la configuración de referencia sin optimizar, el óptimo y una configuración de máximo nivel de servicio. En el escenario Cyber, el diseño subdimensionado alcanza un CPE de 31,6 dólares con una saturación del 62 %, frente a 0,70 dólares y 1,2 % del óptimo. La configuración de máximo servicio prácticamente no mejora el nivel de servicio del óptimo y sí incrementa el costo.")]));
 c.push(img("fig4_comparacion.png", 209));
 c.push(cap("Figura 4. Comparación del CPE entre cuatro diseños de red por escenario (escala logarítmica)."));
 c.push(p([t("Finalmente, la Figura 5 y la Tabla 4 resumen el análisis de sensibilidad sobre los parámetros de costo. Dado que los costos no afectan la dinámica del sistema sino únicamente su valorización, cada variación se recalculó sobre los mismos contadores simulados, lo que elimina el ruido de muestreo en la comparación.")]));
@@ -167,20 +167,20 @@ c.push(cap("Tabla 4. Variación del CPE ante ±30 % en cada parámetro de costo 
 c.push(tabla(
   ["Parámetro", "−30 %", "+30 %", "Var."],
   [
-    ["Amortización", "0,583", "0,824", "34,3 %"],
-    ["Entrega fallida", "0,663", "0,744", "11,6 %"],
-    ["Pase de camión", "0,672", "0,734", "8,9 %"],
-    ["Retiro manual", "0,689", "0,717", "3,9 %"],
-    ["Paquete vencido", "0,699", "0,707", "1,2 %"],
-    ["Espacio ocioso", "0,703", "0,704", "0,2 %"],
+    ["Amortización", "0,620", "0,855", "31,9 %"],
+    ["Entrega fallida", "0,685", "0,790", "14,3 %"],
+    ["Pase de camión", "0,707", "0,768", "8,3 %"],
+    ["Retiro manual", "0,722", "0,753", "4,2 %"],
+    ["Paquete vencido", "0,733", "0,741", "1,1 %"],
+    ["Espacio ocioso", "0,737", "0,738", "0,2 %"],
   ],
   [1500, 900, 900, 800]
 ));
-c.push(p([t("Dado que el tiempo de retiro y la frecuencia de devolución no son observables en la situación actual, se evaluó su influencia con el mismo criterio de ±30 % (Figura 6). El tiempo de retiro resulta el parámetro más influyente del modelo: en el escenario de mayor demanda, un incremento del 30 % en la mediana de retiro eleva el CPE de 0,70 a 1,27 dólares y multiplica la saturación de 0,9 % a 3,2 %, dado que los compartimentos permanecen ocupados durante más tiempo y la capacidad efectiva disminuye. El TMP prácticamente no altera el costo, pero gobierna la proporción de paquetes vencidos, que pasa de 0,04 % a 0,43 % al reducirlo un 30 %. La tasa de devolución incide de forma moderada sobre el costo y de forma directa sobre los clientes insatisfechos, que se duplican al incrementarla un 30 %.")]));
+c.push(p([t("Dado que el tiempo de retiro y la frecuencia de devolución no son observables en la situación actual, se evaluó su influencia con el mismo criterio de ±30 % (Figura 6). El tiempo de retiro resulta el parámetro más influyente del modelo: en el escenario de mayor demanda, un incremento del 30 % en la mediana de retiro eleva el CPE de 0,74 a 1,33 dólares y multiplica la saturación de 1,2 % a 3,7 %, dado que los compartimentos permanecen ocupados durante más tiempo y la capacidad efectiva disminuye. El TMP prácticamente no altera el costo, pero gobierna la proporción de paquetes vencidos, que pasa de 0,03 % a 0,46 % al reducirlo un 30 %. La tasa de devolución incide de forma moderada sobre el costo y de forma directa sobre los clientes insatisfechos, que se duplican al incrementarla un 30 %.")]));
 c.push(img("fig6_sensibilidad_supuestos.png", 384));
 c.push(cap("Figura 6. Sensibilidad a los parámetros de comportamiento no observables: (a) tiempo de retiro, (b) TMP y (c) tasa de devolución."));
 c.push(p([t("A diferencia de lo observado con los costos, el tiempo de retiro sí desplaza el diseño óptimo. Al reoptimizar la grilla completa bajo cada nivel en el escenario Cyber, la configuración de mínimo costo pasa de 30/20/15 compartimentos con un retiro un 30 % más rápido, a 40/25/15 en el caso base y a 50/25/15 con un retiro un 30 % más lento. El comportamiento de retiro de los usuarios determina por lo tanto la capacidad requerida de manera aproximadamente proporcional, lo que constituye el principal factor a monitorear en una implementación real.")]));
-c.push(p([t("La amortización de los compartimentos resulta el parámetro dominante, con una variación del 34,3 % del CPE, mientras que los restantes se mantienen por debajo del 12 %. Al reoptimizar la configuración bajo cada variación, el diseño ganador no se modifica en los escenarios Normal y Cyber, y sólo cambia en dos de las doce variaciones evaluadas en el escenario Navidad, con intercambios menores entre tamaños contiguos.")]));
+c.push(p([t("La amortización de los compartimentos resulta el parámetro dominante, con una variación del 31,9 % del CPE, mientras que los restantes se mantienen por debajo del 15 %. Al reoptimizar la configuración bajo cada variación, el diseño ganador no se modifica en los escenarios Navidad y Cyber, y sólo cambia en tres de las doce variaciones evaluadas en el escenario Normal, con intercambios menores entre tamaños contiguos.")]));
 
 // ---------------- Discusión ----------------
 c.push(H("Discusión"));

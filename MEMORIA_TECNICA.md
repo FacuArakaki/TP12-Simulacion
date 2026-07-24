@@ -126,7 +126,7 @@ Config óptima por escenario (minimiza CPE, con costos reales USD, mapeo Lockeab
 
 | Escenario | Óptimo (C/M/G) | CPE (USD/paq) | EF |
 |---|---|---|---|
-| Normal | 50 / 15 / 10 | ~$0.6 | 0.0% |
+| Normal | 50 / 15 / 10 | ~$0.5 | 0.0% |
 | Navidad | 40 / 15 / 15 | ~$0.7 | 0.1% |
 | Cyber | 40 / 25 / 15 | ~$0.7 | 0.9% |
 
@@ -134,7 +134,7 @@ Config óptima por escenario (minimiza CPE, con costos reales USD, mapeo Lockeab
 - La **estacionalidad es real y cambia el diseño óptimo:** Cyber exige más capacidad que Navidad.
 - En Normal el tamaño grande óptimo baja a 5 (casi no hay grandes) → **dimensionar para el pico vs. para el
   promedio** es la decisión de fondo.
-- Una config subdimensionada ("Malo") tiene CPE ~$27–32/paq contra ~$2.3 del óptimo: el valor de optimizar.
+- Una config subdimensionada ("Malo") tiene CPE ~$26–32/paq contra ~$0.6–0.7 del óptimo: el valor de optimizar.
 
 
 ### 6.1 Análisis de sensibilidad de costos
@@ -144,14 +144,14 @@ CPE y, sobre todo, si cambia el **diseño óptimo**. Como los costos no afectan 
 simulación, se simuló una vez y se recalcularon los costos sobre los mismos contadores: la
 comparación es **exacta**, sin ruido de semillas. (Ver `sensibilidad_tornado.png` y `sensibilidad.xlsx`.)
 
-- **La amortización de lockers (`C_CAP`) es el costo dominante:** ±30% mueve el CPE **~34–44%**.
+- **La amortización de lockers (`C_CAP`) es el costo dominante:** ±30% mueve el CPE **~32–44%** (Cyber 31,9%; Navidad 44,0%).
   Todos los demás quedan **por debajo del ~13%**. Motivo: en la configuración óptima la saturación es
   casi nula, así que prácticamente no se pagan penalizaciones y el costo es esencialmente
   **capacidad instalada**.
 - **Los costos respaldados por fuente (`C_EF`, `C_MANUAL`) tienen impacto bajo (≤5%)**: su
   incertidumbre no amenaza las conclusiones.
 - **Robustez del óptimo:** el diseño ganador se mantiene en la gran mayoría de las variaciones
-  (Normal y Cyber **0/12** cambios; Navidad 2/12, con intercambios menores entre chicos y medianos).
+  (Navidad y Cyber **0/12** cambios; Normal 3/12, con intercambios menores entre chicos y medianos).
 
 **Conclusión:** la recomendación de diseño es **robusta** a la incertidumbre de costos. La sensibilidad
 señaló a `C_CAP` como el parámetro dominante y por eso **se lo refinó con un dato real de TCO**
@@ -161,9 +161,14 @@ señaló a `C_CAP` como el parámetro dominante y por eso **se lo refinó con un
 
 ## 7. Estado y qué falta
 
-Ver `CHECKLIST_TP.md`. En síntesis, **lo técnico grande está** (datos, motor, costos, barrido, comparación).
-Falta: análisis de sensibilidad (costos y supuestos), análisis del transitorio/warm-up, bondad de ajuste
-formal, sincronizar el diagrama de flujo, y redactar paper + slides.
+Ver `CHECKLIST_TP.md`. En síntesis, **el núcleo técnico está completo**: datos reales (llegadas y tamaños)
+y parametrizados (retiros, devoluciones), motor evento a evento, función de costos anclada a fuentes,
+barrido con CRN + 95% IC, comparación de configs, sensibilidad de costos (Grupo A) y de parámetros de
+comportamiento (Grupo B), diagrama de flujo sincronizado con el código, y **paper + slides + guión (7 min)**
+redactados. Corridas definitivas a horizonte de **1 año** (TF = 60·24·365 min).
+
+Falta solo: (a) completar autores/datos de contacto en paper y slides, (b) enviar a David el link de GitHub
+24 hs antes (código + datos + paper) e imprimir 3 papers, (c) ensayar la presentación con el guión.
 
 ---
 
