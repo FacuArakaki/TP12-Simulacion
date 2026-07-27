@@ -80,14 +80,22 @@ for r in ws.iter_rows(min_row=2, values_only=True):
 GC = sorted({k[0] for k in cpe['CYBER']})
 
 # ---------------------------------------------------------- 3) CURVA U
+import json as _json
+_optC = {e: opt[e][0] for e in opt}
 fig, ax = plt.subplots(figsize=(7.6, 4.0))
 for esc, c, m in zip(['NORMAL', 'NAVIDAD', 'CYBER'], SER, MK):
-    _, bm, bg = opt[esc]
-    xs = [x for x in GC if (x, bm, bg) in cpe[esc]]
-    ys = [cpe[esc][(x, bm, bg)] for x in xs]
+    _jf = os.path.join(D, f'curvaU_{esc}.json')
+    if os.path.exists(_jf):
+        _d = {int(k): v for k, v in _json.load(open(_jf)).items()}
+        xs = [x for x in sorted(_d) if x >= 25]; ys = [_d[x] for x in xs]
+    else:
+        _, bm, bg = opt[esc]
+        xs = [x for x in GC if (x, bm, bg) in cpe[esc]]
+        ys = [cpe[esc][(x, bm, bg)] for x in xs]; _d = None
     ax.plot(xs, ys, marker=m, color=c, lw=2.8, ms=8, label=esc.capitalize())
-bc = opt['CYBER'][0]
-ax.annotate('zona óptima', xy=(bc, cpe['CYBER'][opt['CYBER']]), xytext=(bc + 8, 2.6),
+    if _d and _optC[esc] in _d:
+        ax.plot(_optC[esc], _d[_optC[esc]], marker='*', color=c, ms=18, mec='white', mew=1.2, zorder=5)
+ax.annotate('zona óptima', xy=(50, 0.55), xytext=(80, 1.35),
             fontsize=12, color=AMBER, fontweight='bold',
             arrowprops=dict(arrowstyle='->', color=AMBER, lw=2))
 ax.set_xlabel('Compartimentos chicos instalados')

@@ -61,15 +61,24 @@ GC = sorted({k[0] for k in cpe['CYBER']}); GM = sorted({k[1] for k in cpe['CYBER
 GG = sorted({k[2] for k in cpe['CYBER']})
 
 # ---------------------------------------------------------------- FIG 2  curva U
+import json as _json
+_optC = {e: opt[e][0] for e in opt}
 fig, ax = plt.subplots(figsize=(W, 2.5))
 for (esc, c, m) in zip(['NORMAL', 'NAVIDAD', 'CYBER'], GREYS, MARKS):
-    _, bm, bg = opt[esc]
-    xs = [x for x in GC if (x, bm, bg) in cpe[esc]]
-    ys = [cpe[esc][(x, bm, bg)] for x in xs]
+    _jf = os.path.join(D, f'curvaU_{esc}.json')   # barrido 1-D amplio (ver sweep_curvaU.py)
+    if os.path.exists(_jf):
+        _d = {int(k): v for k, v in _json.load(open(_jf)).items()}
+        xs = [x for x in sorted(_d) if x >= 25]; ys = [_d[x] for x in xs]
+    else:                                          # fallback: grilla del barrido
+        _, bm, bg = opt[esc]
+        xs = [x for x in GC if (x, bm, bg) in cpe[esc]]
+        ys = [cpe[esc][(x, bm, bg)] for x in xs]; _d = None
     ax.plot(xs, ys, marker=m, color=c, lw=1.3, ms=3.5, label=esc.capitalize())
+    if _d and _optC[esc] in _d:
+        ax.plot(_optC[esc], _d[_optC[esc]], marker='*', color=c, ms=8, mec='k', mew=0.4, zorder=5)
 ax.set_xlabel('Compartimentos chicos (CLTC)')
 ax.set_ylabel('CPE (USD/paquete)')
-ax.legend(frameon=False); ax.grid(alpha=0.25, lw=0.4)
+ax.legend(frameon=False, title='* optimo'); ax.grid(alpha=0.25, lw=0.4)
 plt.tight_layout(); plt.savefig(os.path.join(D, 'fig2_curvaU.png')); plt.close()
 
 # ---------------------------------------------------------------- FIG 3  heatmaps (3 pares)
